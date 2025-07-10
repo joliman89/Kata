@@ -7,13 +7,18 @@ export type Product = {
   unitPrice: number;
 };
 
-const currentProduct: Product = {sku: "A", name: "Product A", unitPrice: 50} 
+const currentProducts: Product[] = [
+  {sku: "A", name: "Product A", unitPrice: 50},
+  {sku: "B", name: "Product B", unitPrice: 30},
+  {sku: "C", name: "Product A", unitPrice: 20},
+  {sku: "D", name: "Product A", unitPrice: 15}
+];
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <ProductList product={currentProduct} />
+    <ProductList products={currentProducts} />
   );
 }
 

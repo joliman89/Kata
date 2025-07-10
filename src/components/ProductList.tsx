@@ -7,13 +7,17 @@ export type Product = {
 }
 
 type ProductListData = {
-  product: Product;
+  products: Product[];
 }
 
-const ProductList: React.FC<ProductListData> = ({product}) => (
+const ProductList: React.FC<ProductListData> = ({products}) => (
 
 <div>
-  <ul>{product.name}</ul>
+  <ul>{products.map((product) => (
+    <li>
+      {product.name} {product.unitPrice}
+    </li>
+  ))}</ul>
 </div>
 )
 
