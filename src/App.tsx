@@ -16,11 +16,10 @@ export type BasketItem = {
 const currentProducts: Product[] = [
   {sku: "A", name: "Product A", unitPrice: 50},
   {sku: "B", name: "Product B", unitPrice: 30},
-  {sku: "C", name: "Product A", unitPrice: 20},
-  {sku: "D", name: "Product A", unitPrice: 15},
-  {sku: "E", name: "Product A", unitPrice: 15},
-  {sku: "F", name: "Product A", unitPrice: 15}
-
+  {sku: "C", name: "Product C", unitPrice: 20},
+  {sku: "D", name: "Product D", unitPrice: 15},
+  {sku: "E", name: "Product E", unitPrice: 15},
+  {sku: "F", name: "Product F", unitPrice: 15}
 ];
 
 
@@ -28,6 +27,11 @@ function App() {
   //set a new basket in state that can only accept BasketItems
   const [basket, configureBasket] = useState<BasketItem[]>([]);
 
+    //create new instance of the basket - empty array
+    const emptyBasket = () => {
+      configureBasket([]);
+    };
+    
   //add item to the basket
   const addToBasket = (product: Product) => {
     //get the previous state of the basket to allow updating
@@ -43,7 +47,7 @@ function App() {
         return [...prev, { product, quantity: 1 }];
       }
     });
-};
+  }
 
 
   return (
@@ -65,7 +69,7 @@ function App() {
       <ProductList products={currentProducts} addToBasket={addToBasket} />
     </div>
     <div style={{ flex: 1 }}>
-      <Checkout basket={basket} />
+      <Checkout basket={basket} emptyBasket={emptyBasket} />
     </div>
   </div>
   );
