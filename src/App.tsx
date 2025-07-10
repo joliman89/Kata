@@ -14,11 +14,23 @@ const currentProducts: Product[] = [
   {sku: "D", name: "Product A", unitPrice: 15}
 ];
 
+const uiStyle: React.CSSProperties = {
+  minHeight: "56rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  fontFamily: "sans-serif",
+  margin: "2rem auto",
+};
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <ProductList products={currentProducts} />
+    <div style={uiStyle}>
+      <h1>Kata Shopping Checkout</h1>
+      <ProductList products={currentProducts} />
+    </div>
   );
 }
 
