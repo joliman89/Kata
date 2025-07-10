@@ -1,29 +1,35 @@
 import React from "react";
 import type { Product } from "./ProductList";
+import "../styles/common.css";
 
-type CheckoutItem = {
+type BasketItem = {
   product: Product;
   quantity: number;
 };
 
-type CheckoutList = {
-  checkout: CheckoutItem[];
+type BasketList = {
+  basket: BasketItem[];
 };
 
-const Checkout: React.FC<CheckoutList> = ({ checkout }) => {
+const Checkout: React.FC<BasketList> = ({ basket }) => {
 
   return (
-    <div style={{ marginTop: 32 }}>
-      <h2>Checkout</h2>    
-          <ul>
-            {checkout.map((item) => (
-              <li key={item.product.sku}>
+    <div style={{ marginTop: 32 }} className="card">
+      <h2>Basket</h2>
+       {basket.length === 0 ?
+       (
+        <p>Your checkout is empty, why not add your favourite item(s)</p>
+       ) : (   
+          <div>
+            {basket.map((item) => (
+              <span key={item.product.sku}>
                 {item.product.name} x {item.quantity} = ${(
                   item.product.unitPrice * item.quantity
                 ).toFixed(2)}
-              </li>
+              </span>
             ))}
-          </ul>
+          </div>
+       )}
     </div>
   );
 };
