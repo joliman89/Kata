@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/common.css";
-import { type ProductListData, MAX_PER_ROW } from "../config/constants";
+import { type ProductListData, currentPromotions, MAX_PER_ROW } from "../config/constants";
 
 
 const ProductList: React.FC<ProductListData> = ({products, addToBasket }) => {
@@ -13,30 +13,37 @@ const ProductList: React.FC<ProductListData> = ({products, addToBasket }) => {
 return (
     <div>
       <h2>Products</h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        {rows.map((row, rowIdx) => (
-          <div key={rowIdx} style={{ display: "flex", gap: 16 }}>
-            {row.map((product) => (
+      <div className="product-container">
+        {rows.map((row, rowIdx) => (          
+          <div key={rowIdx} className="product-row">
+            {row.map((product) => {
+              const promo = currentPromotions.find((p) => p.sku === product.sku
+              );
+              return (              
               <div
                 key={product.sku}
-                style={{
-                  border: "1px solid #ccc",
-                  borderRadius: 8,
-                  padding: 16,
-                  minWidth: 140,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
+                className="product-card">
                 <span>
-                  <strong>{product.name}</strong> - £{product.unitPrice.toFixed(2)}
+                  <strong>{product.name}</strong>
                 </span>
-                <button style={{ marginTop: 8 }} onClick={() => addToBasket(product)}>
-                  Add to Cart
+                {promo && (
+                  <span className="promotion-info">
+                    Buy {promo.groupSize} for £{(promo.discountPrice / 100).toFixed(2)}
+                    </span>
+                )}
+                <div className="product-price-container">
+                <span className="product-price">
+                 £{(product.unitPrice / 100).toFixed(2)}
+                 </span>
+                 <span>
+                <button onClick={() => addToBasket(product)}>
+                  Add to Basket
                 </button>
+                </span>
               </div>
-            ))}
+            </div>
+            )
+          })}
           </div>
         ))}
       </div>

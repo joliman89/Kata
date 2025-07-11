@@ -47,29 +47,30 @@ const removeFromBasket = (product: Product) => {
   });
 };
 
-  return (
-<div
+return (
+  <div
     style={{
-      maxWidth: 900,
-      margin: "2rem auto",
-      fontFamily: "sans-serif",
-      minHeight: "80vh",
       display: "flex",
       flexDirection: "row",
-      gap: "2rem",
-      alignItems: "flex-start",
       justifyContent: "center",
+      alignItems: "flex-start",
+      gap: "2rem",
+      margin: "4rem auto",
+      fontFamily: "sans-serif",
+      minHeight: "80vh",
     }}
   >
-    <div style={{ flex: 2 }}>
+    <div style={{ flex: 1 }}>
+    </div>
+    <div style={{ flex: 2, width: "80%"  }}>
       <h1>Shopping Basket</h1>
       <ProductList products={currentProducts} addToBasket={addToBasket} />
     </div>
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1, width: "20%" }}>
       <Checkout basket={basket} emptyBasket={emptyBasket} removeFromBasket={removeFromBasket} />
     </div>
   </div>
-  );
+);
 }
 
 export default App

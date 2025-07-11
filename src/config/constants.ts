@@ -19,9 +19,7 @@ export const currentProducts: Product[] = [
   {sku: "A", name: "Product A", unitPrice: 50},
   {sku: "B", name: "Product B", unitPrice: 30},
   {sku: "C", name: "Product C", unitPrice: 20},
-  {sku: "D", name: "Product D", unitPrice: 15},
-  {sku: "E", name: "Product E", unitPrice: 15},
-  {sku: "F", name: "Product F", unitPrice: 15}
+  {sku: "D", name: "Product D", unitPrice: 15}
 ];
 
 export type ProductListData = {
@@ -29,15 +27,15 @@ export type ProductListData = {
   addToBasket: (product: Product) => void;
 }
 
-export const MAX_PER_ROW = 4;
+export const MAX_PER_ROW = 2;
 
 export type Promotion = {
   sku: string;
-  minQuantity: number;
+  groupSize: number;
   discountPrice: number;
 };
 
 export const currentPromotions: Promotion[] = [
-  { sku: "A", minQuantity: 3, discountPrice: 130 },
-  { sku: "B", minQuantity: 2, discountPrice: 45 }
+  { sku: "A", groupSize: 3, discountPrice: 130 },
+  { sku: "B", groupSize: 2, discountPrice: 45 }
 ];
