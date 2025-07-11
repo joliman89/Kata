@@ -1,18 +1,7 @@
 import React from "react";
 import "../styles/common.css";
+import { type ProductListData, MAX_PER_ROW } from "../config/constants";
 
-export type Product = {
-  sku: string;
-  name: string;
-  unitPrice: number;
-}
-
-type ProductListData = {
-  products: Product[];
-  addToBasket: (product: Product) => void;
-}
-
-const MAX_PER_ROW = 4;
 
 const ProductList: React.FC<ProductListData> = ({products, addToBasket }) => {
 
@@ -41,7 +30,7 @@ return (
                 }}
               >
                 <span>
-                  <strong>{product.name}</strong> - ${product.unitPrice.toFixed(2)}
+                  <strong>{product.name}</strong> - £{product.unitPrice.toFixed(2)}
                 </span>
                 <button style={{ marginTop: 8 }} onClick={() => addToBasket(product)}>
                   Add to Cart

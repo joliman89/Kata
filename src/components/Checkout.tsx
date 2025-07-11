@@ -1,18 +1,24 @@
 import React from "react";
-import type { Product } from "./ProductList";
 import "../styles/common.css";
+import { RxCrossCircled } from "react-icons/rx";
+import { type BasketItem, type Promotion, type BasketList, currentPromotions } from "../config/constants";
 
-type BasketItem = {
-  product: Product;
-  quantity: number;
-};
+function getItemTotal(item: BasketItem, promotions: Promotion[]) {
+  const promo = promotions.find(
+    (p) => p.sku === item.product.sku && item.quantity >= p.minQuantity
+  );
+  if (promo) {
+    return promo.discountPrice;
+  }
+  return item.quantity * item.product.unitPrice;
+}
 
-type BasketList = {
-  basket: BasketItem[];
-  emptyBasket: () => void;
-};
-
-const Checkout: React.FC<BasketList> = ({ basket, emptyBasket }) => {
+const Checkout: React.FC<BasketList> = ({ basket, emptyBasket, removeFromBasket }) => {
+  
+const total = basket.reduce(
+  (sum, item) => sum + getItemTotal(item, currentPromotions),
+  0
+);
 
   return (
     <div style={{ marginTop: 32 }} className="card">
@@ -40,14 +46,24 @@ const Checkout: React.FC<BasketList> = ({ basket, emptyBasket }) => {
                   flexDirection: "column",
                   alignItems: "center",
                 }}>
-            {basket.map((item) => (
-              <span key={item.product.sku}>
-                {item.product.name} x {item.quantity} = ${(
-                  item.product.unitPrice * item.quantity
-                ).toFixed(2)}
+                <span style={{ paddingTop: "10px", fontWeight: "bold" }}>
+                  Subtotal: £{total.toFixed(2)}</span>
+            {basket.map((item) => {     
+              const promo = currentPromotions.find((p) => p.sku === item.product.sku && item.quantity >= p.minQuantity
+              );
+              return (         
+              <span key={item.product.sku} style={{paddingTop: "10px"}}>
+                <RxCrossCircled onClick={() => removeFromBasket(item.product)}/>
+                <span style={{display: "inline", paddingLeft: "10px"}}>
+                {item.product.name} x {item.quantity} = £{getItemTotal(item, currentPromotions).toFixed(2)}
+                {promo && <span style={{ color: "green" }}>Promotion applied!</span>}
+                </span>
               </span>
-            ))}
-            <button onClick={emptyBasket}>Empty Basket</button>
+  );
+})}
+            <span style={{paddingTop: "10px", display: "flex", gap: "12px"}}>
+            <button onClick={emptyBasket}>Empty Basket</button><button>Checkout</button>
+            </span>
           </div>
        )}
     </div>

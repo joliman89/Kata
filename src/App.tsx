@@ -1,26 +1,8 @@
 import React, { useState } from "react";
 import ProductList from "./components/ProductList";
 import Checkout from "./components/Checkout";
-
-export type Product = {
-  sku: string;
-  name: string;
-  unitPrice: number;
-};
-
-export type BasketItem = {
-  product: Product;
-  quantity: number;
-};
-
-const currentProducts: Product[] = [
-  {sku: "A", name: "Product A", unitPrice: 50},
-  {sku: "B", name: "Product B", unitPrice: 30},
-  {sku: "C", name: "Product C", unitPrice: 20},
-  {sku: "D", name: "Product D", unitPrice: 15},
-  {sku: "E", name: "Product E", unitPrice: 15},
-  {sku: "F", name: "Product F", unitPrice: 15}
-];
+import { currentProducts } from "./config/constants";
+import type { Product, BasketItem } from "./config/constants";
 
 
 function App() {
@@ -35,7 +17,7 @@ function App() {
   //add item to the basket
   const addToBasket = (product: Product) => {
     //get the previous state of the basket to allow updating
-      configureBasket((prev) => {
+      configureBasket((prev) => {    
       const existing = prev.find((item) => item.product.sku === product.sku);
       if (existing) {
         return prev.map((item) =>
@@ -49,6 +31,21 @@ function App() {
     });
   }
 
+const removeFromBasket = (product: Product) => {
+  configureBasket((prev) => {
+    const existing = prev.find((item) => item.product.sku === product.sku);
+    if (existing && existing.quantity > 1) {
+      return prev.map((item) =>
+        item.product.sku === product.sku
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      );
+    } else {
+      // Remove the item completely if quantity is 1
+      return prev.filter((item) => item.product.sku !== product.sku);
+    }
+  });
+};
 
   return (
 <div
@@ -69,7 +66,7 @@ function App() {
       <ProductList products={currentProducts} addToBasket={addToBasket} />
     </div>
     <div style={{ flex: 1 }}>
-      <Checkout basket={basket} emptyBasket={emptyBasket} />
+      <Checkout basket={basket} emptyBasket={emptyBasket} removeFromBasket={removeFromBasket} />
     </div>
   </div>
   );
