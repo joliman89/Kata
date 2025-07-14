@@ -2,6 +2,7 @@ export type Product = {
   sku: string;
   name: string;
   unitPrice: number;
+  icon: string;
 };
 
 export type BasketItem = {
@@ -16,10 +17,10 @@ export type BasketList = {
 };
 
 export const currentProducts: Product[] = [
-  {sku: "A", name: "Product A", unitPrice: 50},
-  {sku: "B", name: "Product B", unitPrice: 30},
-  {sku: "C", name: "Product C", unitPrice: 20},
-  {sku: "D", name: "Product D", unitPrice: 15}
+  {sku: "A", name: "Apple", unitPrice: 50, icon: "apple"},
+  {sku: "B", name: "Banana", unitPrice: 30, icon: "banana"},
+  {sku: "C", name: "Cheese", unitPrice: 20, icon: "cheese"},
+  {sku: "D", name: "Doughnut", unitPrice: 15, icon: "doughnut"}
 ];
 
 export type ProductListData = {

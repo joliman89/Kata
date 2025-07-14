@@ -21,6 +21,8 @@ const total = basket.reduce(
   0
 );
 
+
+
   return (
     <div className="checkout-card card">
       <h2>Basket</h2>
@@ -35,11 +37,11 @@ const total = basket.reduce(
                 <span>
                   Subtotal: £{(total / 100).toFixed(2)}</span>
             </div>
-            {basket.map((item) => {     
+            {basket.map((item) => {
               const promo = currentPromotions.find((p) => p.sku === item.product.sku && item.quantity >= p.groupSize
               );
-              return (     
-              <span key={item.product.sku} className="basket-item">
+              return (
+              <span key={item.product.sku} className={`basket-item ${promo ? 'has-promotion' : ''}`}>
                 <RxCrossCircled onClick={() => removeFromBasket(item.product)}/>
                 <span className="basket-item-details">
                 {item.product.name} x {item.quantity} = £{(getItemTotal(item, currentPromotions) / 100).toFixed(2)}
